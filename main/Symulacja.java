@@ -1,6 +1,16 @@
 package main;
 
+import zadanie.Linia;
+import zadanie.LiniaTramwajowa;
+import zadanie.Pasazer;
+import zadanie.Przystanek;
+
+import java.util.Scanner;
+
 public class Symulacja {
+    private static Pasazer[] pasazerowie;
+    private static LiniaTramwajowa[] linieTramwajowe;
+    private static Przystanek[] przystanki;
     private static int pojemnoscTramwaju;
     private static int pojemnoscPrzystanku;
     private static final int godzinaWyjazduTramwajow = 6;
@@ -28,20 +38,42 @@ public class Symulacja {
         return aktualnyDzien;
     }
 
-    public static void setPojemnoscTramwaju(int pojemnoscTramwaju) {
+    public static Przystanek[] getPrzystanki() {
+        return przystanki;
+    }
+
+    public static Pasazer[] getPasazerowie() {
+        return pasazerowie;
+    }
+
+    public static int getPojemnoscPrzystanku() {
+        return pojemnoscPrzystanku;
+    }
+
+    public static LiniaTramwajowa[] getLinieTramwajowe() {
+        return linieTramwajowe;
+    }
+
+    public static void incrementDzien() {
+        Symulacja.aktualnyDzien++;
+    }
+
+    public static void setSymulacjaInts(int dniSymulacji, int pojemnoscPrzystanku, int pojemnoscTramwaju) {
+        Symulacja.dniSymulacji = dniSymulacji;
+        Symulacja.pojemnoscPrzystanku = pojemnoscPrzystanku;
         Symulacja.pojemnoscTramwaju = pojemnoscTramwaju;
     }
 
-    public static void setDniSymulacji(int dniSymulacji) {
-        Symulacja.dniSymulacji = dniSymulacji;
+    public static void setPasazerowie(Pasazer[] pasazerowie) {
+        Symulacja.pasazerowie = pasazerowie;
     }
 
-    public static void setPojemnoscPrzystanku(int pojemnoscPrzystanku) {
-        Symulacja.pojemnoscPrzystanku = pojemnoscPrzystanku;
+    public static void setLinie(LiniaTramwajowa[] linie) {
+        Symulacja.linieTramwajowe = linie;
     }
 
-    public void incrementDzien() {
-        Symulacja.aktualnyDzien++;
+    public static void setPrzystanki(Przystanek[] przystanki) {
+        Symulacja.przystanki = przystanki;
     }
 
 }

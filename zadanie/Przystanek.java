@@ -5,4 +5,12 @@ public class Przystanek {
     private int pojemnosc;
     private int indeksOstatniejOsoby;
     private Pasazer[] listaCzekajacych;
+
+    public Przystanek(String nazwa) {
+        this.nazwa = nazwa;
+    }
+
+    public String getNazwa() {
+        return nazwa;
+    }
 }

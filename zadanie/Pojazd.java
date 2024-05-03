@@ -1,5 +1,7 @@
 package zadanie;
 
+import main.Symulacja;
+
 public abstract class Pojazd {
 
     private int numerBoczny;
@@ -10,7 +12,6 @@ public abstract class Pojazd {
     public Pojazd(int numerBoczny, Linia linia) {
         this.numerBoczny = numerBoczny;
         this.linia = linia;
-        this.listaPasazerow = new Pasazer[Symulacja.pojemnoscTramwaju];
         this.indeksWstawienia = 0;
     }
 }
