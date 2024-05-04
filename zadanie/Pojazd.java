@@ -14,4 +14,12 @@ public abstract class Pojazd {
         this.linia = linia;
         this.indeksWstawienia = 0;
     }
+
+    public int getNumerBoczny() {
+        return numerBoczny;
+    }
+
+    public Linia getLinia() {
+        return linia;
+    }
 }

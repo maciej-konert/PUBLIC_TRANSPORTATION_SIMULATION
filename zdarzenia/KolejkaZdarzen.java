@@ -16,15 +16,12 @@ public class KolejkaZdarzen {
         indeksWstawiania++;
     }
 
-    public static boolean czyPusta() {
-        if (indeksWstawiania == 0)
-            return true;
-        else
-            return false;
+    public static boolean czyNiePusta() {
+        return indeksWstawiania != indeksPobrania;
     }
 
     public static Zdarzenie pobierzZdarzenie() {
-        assert !czyPusta() : "Pobranie z pustej kolejki";
+        assert czyNiePusta() : "Pobranie z pustej kolejki";
         indeksPobrania++;
         return kolejka[indeksPobrania - 1];
     }

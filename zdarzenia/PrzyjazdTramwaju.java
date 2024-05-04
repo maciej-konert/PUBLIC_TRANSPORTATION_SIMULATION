@@ -15,6 +15,8 @@ public class PrzyjazdTramwaju extends Zdarzenie {
 
     @Override
     public String toString() {
-        return super.toString() + "Tramwaj linii: ";
+        return super.toString() + "Tramwaj linii: " + tramwaj.getLinia().getNumerLinii() +
+                " (nr bocz. " + tramwaj.getNumerBoczny() + ") przyjechal na przystanek " +
+                gdziePrzyjechal.getNazwa();
     }
 }

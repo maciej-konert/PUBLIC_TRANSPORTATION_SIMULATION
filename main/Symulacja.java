@@ -14,7 +14,7 @@ public class Symulacja {
     private static int pojemnoscTramwaju;
     private static int pojemnoscPrzystanku;
     private static final int godzinaWyjazduTramwajow = 6;
-    private static final int godzinaPrzyjazduTramwajow = 23;
+    private static final int godzinaPowrotuTramwajow = 23;
     private static int dniSymulacji;
     private static int aktualnyDzien = 0;
 
@@ -26,8 +26,8 @@ public class Symulacja {
         return godzinaWyjazduTramwajow;
     }
 
-    public static int getGodzinaPrzyjazduTramwajow() {
-        return godzinaPrzyjazduTramwajow;
+    public static int getGodzinaPowrotuTramwajow() {
+        return godzinaPowrotuTramwajow;
     }
 
     public static int getDniSymulacji() {

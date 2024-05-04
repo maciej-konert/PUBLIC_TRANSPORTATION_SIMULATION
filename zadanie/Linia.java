@@ -1,9 +1,9 @@
 package zadanie;
 
 public class Linia {
-    private Przystanek[] trasa;
-    private int[] trasaCzasDojazdu;
-    private int numerLinii;
+    protected Przystanek[] trasa;
+    protected int[] trasaCzasDojazdu;
+    protected int numerLinii;
 
     public Linia(Przystanek[] trasa, int[] trasaCzasDojazdu, int numerLinii) {
         this.trasa = trasa;
@@ -13,6 +13,10 @@ public class Linia {
 
     public Przystanek[] getTrasa() {
         return trasa;
+    }
+
+    public int getNumerLinii() {
+        return numerLinii;
     }
 
     public void setTrasa(Przystanek[] trasa) {
@@ -26,4 +30,5 @@ public class Linia {
     public int[] getTrasaCzasDojazdu() {
         return trasaCzasDojazdu;
     }
+
 }
