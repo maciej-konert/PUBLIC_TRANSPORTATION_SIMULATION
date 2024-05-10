@@ -100,6 +100,8 @@ public class Skaner {
     }
 
     public static void wczytajDane() {
+        System.out.println("PODAJ DANE DO SYMULACJI");
+        
         int dniSymulacji = Integer.parseInt(sc.nextLine());
         int pojemnoscPrzystanku = Integer.parseInt(sc.nextLine());
         Symulacja.setPojemnoscPrzystanku(pojemnoscPrzystanku);
