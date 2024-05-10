@@ -1,6 +1,5 @@
 package zadanie;
 
-import main.Main;
 import main.Symulacja;
 
 import java.util.Arrays;

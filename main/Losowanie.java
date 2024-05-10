@@ -1,6 +1,5 @@
 package main;
 
-import zadanie.Linia;
 import zadanie.Przystanek;
 import zadanie.Tramwaj;
 
@@ -22,7 +21,7 @@ public class Losowanie {
         return losuj(godzinaPasazerOD * 60, getGodzinaPasazerDO * 60);
     }
 
-    public static Przystanek naKtoryPrzystanek(Tramwaj tramwaj, Przystanek skadOdjazd) {
+    public static Przystanek naKtoryPrzystanek(Tramwaj tramwaj) {
         int dlugoscTrasy = tramwaj.getLinia().getTrasa().length,
                 jakDalekoJestT = tramwaj.getIlePrzejechalPrzystankow() % (dlugoscTrasy * 2);
         Przystanek[] trasa = tramwaj.getLinia().getTrasa();

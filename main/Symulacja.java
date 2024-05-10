@@ -4,8 +4,6 @@ import zadanie.*;
 import zdarzenia.KolejkaZdarzen;
 import zdarzenia.Zdarzenie;
 
-import java.util.Scanner;
-
 public class Symulacja {
     private static Pasazer[] pasazerowie;
     private static LiniaTramwajowa[] linieTramwajowe;
