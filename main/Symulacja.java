@@ -1,9 +1,8 @@
 package main;
 
-import zadanie.Linia;
-import zadanie.LiniaTramwajowa;
-import zadanie.Pasazer;
-import zadanie.Przystanek;
+import zadanie.*;
+import zdarzenia.KolejkaZdarzen;
+import zdarzenia.Zdarzenie;
 
 import java.util.Scanner;
 
@@ -54,14 +53,13 @@ public class Symulacja {
         return linieTramwajowe;
     }
 
-    public static void incrementDzien() {
-        Symulacja.aktualnyDzien++;
+    public static void setSymulacjaInts(int dniSymulacji, int pojemnoscTramwaju) {
+        Symulacja.dniSymulacji = dniSymulacji;
+        Symulacja.pojemnoscTramwaju = pojemnoscTramwaju;
     }
 
-    public static void setSymulacjaInts(int dniSymulacji, int pojemnoscPrzystanku, int pojemnoscTramwaju) {
-        Symulacja.dniSymulacji = dniSymulacji;
+    public static void setPojemnoscPrzystanku(int pojemnoscPrzystanku) {
         Symulacja.pojemnoscPrzystanku = pojemnoscPrzystanku;
-        Symulacja.pojemnoscTramwaju = pojemnoscTramwaju;
     }
 
     public static void setPasazerowie(Pasazer[] pasazerowie) {
@@ -74,6 +72,61 @@ public class Symulacja {
 
     public static void setPrzystanki(Przystanek[] przystanki) {
         Symulacja.przystanki = przystanki;
+    }
+
+    // GLOWNA SYMULACJA.
+
+    private static void symulujTramwaje() {
+        for (LiniaTramwajowa l : linieTramwajowe)
+            l.symulujTramwaje();
+    }
+
+    private static void symulujPasazerow() {
+        for (Pasazer p : pasazerowie)
+            p.symulujPrzyjscieNaPrzystanek();
+    }
+
+    private static void skorzystajZKolejki() {
+
+        while (KolejkaZdarzen.czyNiePusta()) {
+            Zdarzenie z = KolejkaZdarzen.pobierzZdarzenie();
+
+            z.przetworzZdarzenie();
+            System.out.println(z);
+        }
+
+        KolejkaZdarzen.wyczyscKolejke();
+    }
+
+    private static void ustawOdNowa() {
+        for (Przystanek p : przystanki)
+            p.pobierzPasazerow(pojemnoscPrzystanku);
+        for (LiniaTramwajowa l : linieTramwajowe)
+            for (Tramwaj t : l.getTramwaje())
+                t.ustawOdNowa();
+        for (Pasazer p : pasazerowie)
+            p.wyzerujDoStatystyk();
+    }
+
+    public static void glownaSymulacja() {
+        Skaner.wczytajDane();
+
+        for (int i = 0; i < dniSymulacji; i++) {
+
+            symulujTramwaje();
+            symulujPasazerow();
+
+            skorzystajZKolejki();
+
+            Statystyka.ustawLiczbePrzejazdowWDniu();
+            Statystyka.ustawOczekiwanieWDniu();
+
+            ustawOdNowa();
+
+            aktualnyDzien++;
+        }
+
+        Statystyka.wypiszSymulacje();
     }
 
 }

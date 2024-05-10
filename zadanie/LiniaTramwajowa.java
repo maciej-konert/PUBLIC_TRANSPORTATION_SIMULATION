@@ -3,13 +3,10 @@ package zadanie;
 import main.Symulacja;
 import zdarzenia.KolejkaZdarzen;
 import zdarzenia.PrzyjazdTramwaju;
-import zdarzenia.Zdarzenie;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public class LiniaTramwajowa extends Linia {
-
     private Tramwaj[] tramwaje;
 
     public LiniaTramwajowa(Przystanek[] trasa, int[] trasaCzasDojazdu, int nrLinii) {
@@ -54,7 +51,7 @@ public class LiniaTramwajowa extends Linia {
         return sufiksTab;
     }
 
-    private void symulujZDowolnejStrony(Tramwaj[] doWypuszczenia, int minutyPoczatku,
+    private int symulujZDowolnejStrony(Tramwaj[] doWypuszczenia, int minutyPoczatku,
                                      Przystanek[] trasaM, int[] trasaCzasM) {
         int[] prefiks = prefiksCzas(trasaCzasM), sufiks = sufiksCzas(trasaCzasM);
         int licznik = 0, czasNaPetli = trasaCzasM[trasaCzasM.length - 1],
@@ -66,14 +63,18 @@ public class LiniaTramwajowa extends Linia {
                     KolejkaZdarzen.wstawZdarzenie(new PrzyjazdTramwaju(Symulacja.getAktualnyDzien(),
                             minutyPoczatku + licznik + prefiks[i], trasaM[i], tram));
 
-                for (int j = trasaM.length - 1; j > 0; j--)
+                for (int j = trasaM.length - 1; j >= 0; j--)
                     KolejkaZdarzen.wstawZdarzenie(new PrzyjazdTramwaju(Symulacja.getAktualnyDzien(),
                             czasNaPetli + prefiks[prefiks.length - 1] + minutyPoczatku +
                                     sufiks[j] + licznik, trasaM[j], tram));
 
             }
+
             licznik += coIleWypuszczac;
         }
+
+        minutyPoczatku += 2 * (prefiks[prefiks.length - 1] + czasNaPetli);
+        return minutyPoczatku;
     }
 
     private void odwrocTablice(Object[] tab) {
@@ -111,19 +112,27 @@ public class LiniaTramwajowa extends Linia {
      */
     public void symulujTramwaje() {
         Tramwaj[] tramwajePocz, tramwajeKon;
-        int dlugosc = tramwaje.length;
+        int licznik = Symulacja.getGodzinaWyjazduTramwajow() * 60;
+        int dlugosc1 = (int) Math.ceil((double) tramwaje.length / 2);
 
-        tramwajePocz = Arrays.copyOfRange(tramwaje,0, dlugosc / 2);
-        tramwajeKon = Arrays.copyOfRange(tramwaje, dlugosc / 2, dlugosc);
+        tramwajePocz = Arrays.copyOfRange(tramwaje, 0, dlugosc1);
+        tramwajeKon = Arrays.copyOfRange(tramwaje, dlugosc1, tramwaje.length);
 
-        Przystanek[] trasaM = Arrays.copyOf(this.trasa, this.trasa.length);
-        int[] czasM = Arrays.copyOf(this.trasaCzasDojazdu, this.trasaCzasDojazdu.length);
+        Przystanek[] trasaM = Arrays.copyOf(trasa, trasa.length);
+        int[] czasM = Arrays.copyOf(trasaCzasDojazdu, trasaCzasDojazdu.length);
 
         przygotujKoniec(trasaM, czasM);
 
-        symulujZDowolnejStrony(tramwajePocz, Symulacja.getGodzinaWyjazduTramwajow() * 60,
-                trasa, trasaCzasDojazdu);
-        symulujZDowolnejStrony(tramwajeKon, Symulacja.getGodzinaWyjazduTramwajow() * 60,
-                trasaM, czasM);
+        while (licznik <= Symulacja.getGodzinaPowrotuTramwajow() * 60) {
+            int licznikM = licznik;
+
+            licznik = symulujZDowolnejStrony(tramwajePocz, licznik, trasa, trasaCzasDojazdu);
+            symulujZDowolnejStrony(tramwajeKon, licznikM, trasaM, czasM);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Linia tramwajowa nr: " + numerLinii;
     }
 }

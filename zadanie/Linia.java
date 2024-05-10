@@ -19,16 +19,12 @@ public class Linia {
         return numerLinii;
     }
 
-    public void setTrasa(Przystanek[] trasa) {
-        this.trasa = trasa;
-    }
-
-    public void setTrasaCzasDojazdu(int[] trasaCzasDojazdu) {
-        this.trasaCzasDojazdu = trasaCzasDojazdu;
-    }
-
     public int[] getTrasaCzasDojazdu() {
         return trasaCzasDojazdu;
     }
 
+    @Override
+    public String toString() {
+        return "Linia nr: " + numerLinii;
+    }
 }

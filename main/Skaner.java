@@ -5,13 +5,11 @@ import zadanie.Pasazer;
 import zadanie.Przystanek;
 import zadanie.Tramwaj;
 
-import java.util.Arrays;
 import java.util.Scanner;
-import java.util.concurrent.SynchronousQueue;
 
 public class Skaner {
 
-    private static Scanner sc = new Scanner(System.in);
+    private static final Scanner sc = new Scanner(System.in);
 
     private static void wczytajPrzystanki() {
         int ilePrzystankow = Integer.parseInt(sc.nextLine());
@@ -29,7 +27,7 @@ public class Skaner {
          Pasazer[] pasazerowie = new Pasazer[ilePasazerow];
 
          for (int i = 0; i < ilePasazerow; i++) {
-             pasazerowie[i] = new Pasazer(Losowanie.wylosujPrzystanek(), i + 1);
+             pasazerowie[i] = new Pasazer(Losowanie.wylosujPrzystanek(), i);
          }
 
          Symulacja.setPasazerowie(pasazerowie);
@@ -60,8 +58,12 @@ public class Skaner {
             }
             linie[i] = new LiniaTramwajowa(przystanki, trasaCzasDojazdu, i);
 
-            for (int k = 0; k < liczbaTramwajow; k++) {
-                tramwaje[k] = new Tramwaj(nrTramwaju, linie[i]);
+            int dlugosc = (int) Math.ceil((double) tramwaje.length / 2);
+            for (int k = 0; k < dlugosc; k++) {
+                tramwaje[k] = new Tramwaj(nrTramwaju, linie[i], true);
+                nrTramwaju++;
+            } for (int l = dlugosc; l < liczbaTramwajow; l++) {
+                tramwaje[l] = new Tramwaj(nrTramwaju, linie[i], false);
                 nrTramwaju++;
             }
             linie[i].setTramwaje(tramwaje);
@@ -95,19 +97,18 @@ public class Skaner {
             }
             System.out.println();
         }
-
-
     }
 
     public static void wczytajDane() {
         int dniSymulacji = Integer.parseInt(sc.nextLine());
         int pojemnoscPrzystanku = Integer.parseInt(sc.nextLine());
+        Symulacja.setPojemnoscPrzystanku(pojemnoscPrzystanku);
 
         wczytajPrzystanki();
         stworzPasazerow();
 
         int pojemnoscTramwajow = Integer.parseInt(sc.nextLine());
-        Symulacja.setSymulacjaInts(dniSymulacji, pojemnoscPrzystanku, pojemnoscTramwajow);
+        Symulacja.setSymulacjaInts(dniSymulacji, pojemnoscTramwajow);
 
         wczytajLinieTramwajowe();
 

@@ -2,16 +2,17 @@ package main;
 
 import zadanie.Linia;
 import zadanie.Przystanek;
+import zadanie.Tramwaj;
 
 import java.util.Random;
 
 public class Losowanie {
-    public static final int godzinaPasazerOD = 6;
-    public static final int getGodzinaPasazerDO = 12;
+    private static final int godzinaPasazerOD = 6;
+    private static final int getGodzinaPasazerDO = 12;
 
     public static int losuj(int dolna, int gorna) {
         Random r = new Random();
-        return r.nextInt(dolna, ++gorna);
+        return r.nextInt(dolna, gorna + 1);
     }
 
     /**
@@ -21,18 +22,22 @@ public class Losowanie {
         return losuj(godzinaPasazerOD * 60, getGodzinaPasazerDO * 60);
     }
 
-    public static Przystanek naKtoryPrzystanek(Linia linia, Przystanek skadOdjazd) {
-        int licznik = 0;
+    public static Przystanek naKtoryPrzystanek(Tramwaj tramwaj, Przystanek skadOdjazd) {
+        int dlugoscTrasy = tramwaj.getLinia().getTrasa().length,
+                jakDalekoJestT = tramwaj.getIlePrzejechalPrzystankow() % (dlugoscTrasy * 2);
+        Przystanek[] trasa = tramwaj.getLinia().getTrasa();
 
-        while (!linia.getTrasa()[licznik].equals(skadOdjazd)) {
-            licznik++;
-        }
+        if (tramwaj.getCzyStartowalZPoczatku())
+            if (jakDalekoJestT > dlugoscTrasy)
+                return trasa[losuj(0, 2 * dlugoscTrasy - jakDalekoJestT - 1)];
+            else
+                return trasa[losuj(jakDalekoJestT, dlugoscTrasy - 1)];
+        else
+            if (jakDalekoJestT > dlugoscTrasy)
+                return trasa[losuj(2 * dlugoscTrasy - jakDalekoJestT, dlugoscTrasy - 1)];
+            else
+                return trasa[losuj(0, dlugoscTrasy - jakDalekoJestT - 1)];
 
-        if (licznik == linia.getTrasa().length - 1) {
-            return linia.getTrasa()[losuj(0, licznik - 1)];
-        } else {
-            return linia.getTrasa()[losuj(++licznik, linia.getTrasa().length) - 1];
-        }
     }
 
     public static Przystanek wylosujPrzystanek() {
