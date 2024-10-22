@@ -1,2 +1,3 @@
-# To jest pierwsze duże zadanie z programowania obiektowego oraz moje rozwiązanie (w JAVIE). 
-Polecenie jest dostępne w pdfie. Udostępniam również przygotowany przed rozpoczęciem pisania schemat klas w programie DIA. Zadanie jeszcze nie zostało ocenione, aczkolwiek wydaje się działać poprawnie.
+# This was my first bigger JAVA based project.
+What it does is it simulates the tram traffic in a city based on the number of tram lines, trams capacity, number of passengers, working hours etc. You can view the task
+in the .pdf file. 
